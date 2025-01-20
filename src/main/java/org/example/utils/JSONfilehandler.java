@@ -1,4 +1,4 @@
-package utils;
+package org.example.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JSONfilehandler {
-    private static final String fileName = "data.json";
+    private static final String fileName = "/Users/vibhork/Desktop/Restaurant/src/main/resources/data.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static void addTOJsonFile(String key,FoodItem foodItem){

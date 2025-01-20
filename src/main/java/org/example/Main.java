@@ -67,15 +67,27 @@ public class Main {
                     selectedSize = Size.LARGE;
                 }
 
-                System.out.println("Enter the number of toppings you want to have: ");
-                int n = Integer.parseInt(sc.nextLine());
+               if(inputFoodType==1) {
+                    System.out.println("Enter the number of toppings you want to have: ");
+                    int n = Integer.parseInt(sc.nextLine());
 
-                toppings.clear();
-                while (n-- > 0) {
-                    System.out.println("Enter the topping name: ");
-                    String str = sc.nextLine();
-                    toppings.add(str);
-                }
+                    toppings.clear();
+                    while (n-- > 0) {
+                        System.out.println("Enter the topping name: ");
+                        String str = sc.nextLine();
+                        toppings.add(str);
+                    }
+                }else if(inputFoodType==2){
+                   System.out.println("Enter the number of Stuffings you want to have: ");
+                   int n = Integer.parseInt(sc.nextLine());
+
+                   toppings.clear();
+                   while (n-- > 0) {
+                       System.out.println("Enter the stuffings name: ");
+                       String str = sc.nextLine();
+                       toppings.add(str);
+                   }
+               }
                 System.out.println("Enter the type of Category: \n" + "1. Veg \n" + "2. Non-veg");
                 int w = Integer.parseInt(sc.nextLine());
                 if (w == 1) {

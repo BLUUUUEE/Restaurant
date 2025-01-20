@@ -1,11 +1,10 @@
 package org.example.dto;
 
 import org.example.model.FoodItem;
-import utils.JSONfilehandler;
+import org.example.utils.JSONfilehandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MenuDetails {

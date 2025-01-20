@@ -1,0 +1,35 @@
+{
+  "q": {
+    "name": "q",
+    "price": 123.0,
+    "description": "qq",
+    "size": "SMALL",
+    "toppings": [
+      "qq"
+    ],
+    "category": "VEG",
+    "foodType": "PIZZA"
+  },
+  "ee": {
+    "name": "ee",
+    "price": 233.0,
+    "description": "eeee",
+    "size": "MEDIUM",
+    "toppings": [
+      "ee"
+    ],
+    "category": "NON_VEG",
+    "foodType": "BURGER"
+  },
+  "Vibhor\u0027s 2nd Pizza": {
+    "name": "Vibhor\u0027s 2nd Pizza",
+    "price": 300.0,
+    "description": "It is my second Pizza",
+    "size": "MEDIUM",
+    "toppings": [
+      "Paeer"
+    ],
+    "category": "VEG",
+    "foodType": "PIZZA"
+  }
+}
