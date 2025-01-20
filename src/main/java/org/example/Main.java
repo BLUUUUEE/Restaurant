@@ -9,19 +9,23 @@ import org.example.dto.MenuDetails;
 import org.example.dto.MetadataDTO;
 import org.example.model.Bread;
 import org.example.model.FoodItem;
+import org.example.model.Order;
 import org.example.service.MenuService;
 import org.example.service.OrderService;
 import org.example.service.*;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.*;
+
+import static org.example.dto.MenuDetails.fetchAllDataPriorToObjectDeclaration;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         MenuService menuService = new MenuService();
-        OrderService orderService = new OrderService();
 
-        ArrayList<String>names = new ArrayList<>();
+//        ArrayList<String>names = new ArrayList<>();
 
         Map<Integer, Bread> breadMap = new HashMap<>();
         breadMap.put(1, new Bread(70f, "Garlic"));
@@ -102,29 +106,35 @@ public class Main {
                 menuService.upsertMenuItem(menuService.createFoodItem(foodItemName, price, desc, selectedSize,
                         toppings, selectCategory, foodType));
 
-                names.add(foodItemName);
-//                System.out.println(MetadataDTO.getMetadata());
+
 
                 System.out.println("Your Food Item has been added to the menu List!!");
             } else if (choice == 2) {
+                fetchAllDataPriorToObjectDeclaration();
+                OrderService orderService = new OrderService();
+                System.out.println("Enter your name: ");
+                String name = sc.nextLine();
+                String orderId = Time.valueOf(LocalTime.MAX).toString();
+                Order order = orderService.createOrder(name,orderId,new ArrayList<>());
 
-                Float payableAmount=0f;
 
                 while(true)  {
+                System.out.println("Select the fod item you want to choose: 1. Pizza    2. Burger " );
+                int foodType = Integer.parseInt(sc.nextLine());
+                    ArrayList<FoodItem>foodList ;
+
+                if(foodType==1){
+                    foodList = MenuDetails.fetchDatawithFoodType(FoodType.PIZZA);
+                }else{
+                    foodList = MenuDetails.fetchDatawithFoodType(FoodType.BURGER);
+                }
                     System.out.println("This is the menu please select your preferences: ");
                     int counter = 1;
-                    ArrayList<FoodItem>foodList = MenuDetails.getCompleteMenu();
 
                     for(int i=1;i<= foodList.size();i++){
                         System.out.println(i+". "+foodList.get(i-1).getName()+" "+foodList.get(i-1).getPrice()+" "+foodList.get(i-1).getDescription());
                     }
-//                    for (String s : names) {
-//                        System.out.println(s);
-//                        Metadata metaInfo = MetadataDTO.getMetadata(s);
-//                        System.out.println(counter + ". " + metaInfo.toString()+" "+metaInfo.getPrice());
-//
-//                        counter++;
-//                    }
+
 
                     ArrayList<Integer> orderIndices = new ArrayList<>();
 
@@ -132,10 +142,12 @@ public class Main {
                     int dishedCount = Integer.parseInt(sc.nextLine());
 
                     for(int i=0;i<dishedCount;i++) {
+                        Float payableAmount=0f;
+
                         System.out.println("Enter you dish number: ");
 
-                        int order = Integer.parseInt(sc.nextLine());
-                        orderIndices.add(order);
+                        int orderindex = Integer.parseInt(sc.nextLine());
+                        orderIndices.add(orderindex);
                         payableAmount += foodList.get(i).getPrice();
                         // bread selection
                         System.out.println("Select your bread preference:");
@@ -144,28 +156,26 @@ public class Main {
                                     + "-" + breadMap.get(bread).getPrice());
                         }
                         int breadPref = Integer.parseInt(sc.nextLine());
-                        payableAmount += breadMap.get(breadPref).getPrice();
+                         foodList.get(orderindex-1).
+                                 setPrice(foodList.get(orderindex-1).getPrice()+breadMap.get(breadPref).getPrice()) ;
+
+                        order.addItem(foodList.get(orderindex-1));
+
                     }
 
 
                     int sizeTillNow = 0;
                     System.out.println("These are your order Details: ");
-                    for (int i = sizeTillNow; i < orderIndices.size(); i++) {
-                            FoodItem item = foodList.get(orderIndices.get(i)-1);
-                        System.out.println(i+1 + ". "+ item.getName() + " "+ item.getPrice() + " "+item.getDescription());
-                    }
-                    sizeTillNow = orderIndices.size();
+
+                    order.displayOrderDetails();
 
                     System.out.println("Do you want to order something else:    1. Yes     2.No");
                     int wantToOrder = Integer.parseInt(sc.nextLine());
                     if(wantToOrder==2){
-                        System.out.println("This is your total bill:"+payableAmount);
+//                        Sy
 
                         System.out.println("These are your order Details : ");
-                        for (int i = 0; i < orderIndices.size(); i++) {
-                        FoodItem item = foodList.get(orderIndices.get(i)-1);
-                        System.out.println(i+1 + ". "+ item.getName() + " "+ item.getPrice() + " "+item.getDescription());
-                        }
+                        order.displayOrderDetails();
                         System.out.println("Thank You");
                         break;
 

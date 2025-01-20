@@ -9,6 +9,11 @@ import java.util.List;
 
 public class FoodItem implements MenuItem {
     private String name;
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     private float price;
     private String description;
     private Size size;
